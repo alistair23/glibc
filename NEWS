@@ -89,6 +89,12 @@ Major new features:
   support, otherwise runtime objects linked into user code will not be
   BTI compatible.
 
+* Support RISC-V port for 32-bit. The ISA and ABI pairs supported as follows:
+
+    - rv32imac ilp32
+    - rv32imafdc ilp32
+    - rv32imafdc ilp32d
+
 Deprecated and removed features, and other changes affecting compatibility:
 
 * Remove configure option --enable-obsolete-nsl.  libnsl is only built
