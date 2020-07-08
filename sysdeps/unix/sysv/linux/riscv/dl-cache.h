@@ -38,37 +38,37 @@
    so this will add all of those paths.
 
    According to Joseph Myers:
-       My reasoning for that would be: generic autoconf-configured (etc.)
-       software may only know about using the lib directory, so you want the
-       lib directory to be searched regardless of the ABI - but it's also
-       useful to be able to e.g. list /usr/local/lib in /etc/ld.so.conf for all
-       architectures and have that automatically imply /usr/local/lib64/lp64d
-       etc. so that libraries can be found that come from software that does
-       use the ABI-specific directories.  */
-#define add_system_dir(dir) 						\
-  do							    		\
-    {									\
-      size_t len = strlen (dir);					\
-      char path[len + 9];						\
-      memcpy (path, dir, len + 1);					\
-      if (len >= 12 && ! memcmp(path + len - 12, "/lib64/lp64d", 12))	\
-	{								\
-	  len -= 8;							\
-	  path[len] = '\0';						\
-	}								\
-      if (len >= 11 && ! memcmp(path + len - 11, "/lib64/lp64", 11))	\
-	{								\
-	  len -= 7;							\
-	  path[len] = '\0';						\
-	}								\
-      add_dir (path);							\
-      if (len >= 4 && ! memcmp(path + len - 4, "/lib", 4))		\
-	{								\
-	  memcpy (path + len, "64/lp64d", 9);				\
-	  add_dir (path);						\
-	  memcpy (path + len, "64/lp64", 8);				\
-	  add_dir (path);						\
-	}								\
+	 My reasoning for that would be: generic autoconf-configured (etc.)
+	 software may only know about using the lib directory, so you want the
+	 lib directory to be searched regardless of the ABI - but it's also
+	 useful to be able to e.g. list /usr/local/lib in /etc/ld.so.conf for all
+	 architectures and have that automatically imply /usr/local/lib64/lp64d
+	 etc. so that libraries can be found that come from software that does
+	 use the ABI-specific directories.  */
+#define add_system_dir(dir) 									\
+  do							    					\
+    {												\
+	size_t len = strlen (dir);								\
+	char path[len + 9];									\
+	memcpy (path, dir, len + 1);								\
+	if (len >= 12 && ! memcmp(path + len - 12, "/lib64/lp64d", 12))				\
+	{											\
+	  len -= 8;										\
+	  path[len] = '\0';									\
+	}											\
+	if (len >= 11 && ! memcmp(path + len - 11, "/lib64/lp64", 11))				\
+	{											\
+	  len -= 7;										\
+	  path[len] = '\0';									\
+	}											\
+	add_dir (path);										\
+	if (len >= 4 && ! memcmp(path + len - 4, "/lib", 4))					\
+	{											\
+	  memcpy (path + len, "64/lp64d", 9);							\
+	  add_dir (path);									\
+	  memcpy (path + len, "64/lp64", 8);							\
+	  add_dir (path);									\
+	}											\
     } while (0)
 
 
