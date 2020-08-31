@@ -1,4 +1,4 @@
-/* lround().  32-bit RISC-V (RV32) version.
+/* lroundf().  RISC-V version.
    Copyright (C) 2020 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
@@ -17,15 +17,23 @@
    <https://www.gnu.org/licenses/>.  */
 
 #include <math.h>
-#include <libm-alias-double.h>
+#include <libm-alias-float.h>
 #include <stdint.h>
 
+#if __WORDSIZE == 64
+# define OP "fcvt.l.s"
+#elif __WORDSIZE == 32
+# define OP "fcvt.w.s"
+#else
+# error Unsupported
+#endif
+
 long int
-__lround (double x)
+__lroundf (float x)
 {
-  int32_t res;
-  asm ("fcvt.w.d %0, %1, rmm" : "=r" (res) : "f" (x));
+  long res;
+  asm (OP "\t%0, %1, rmm" : "=r" (res) : "f" (x));
   return res;
 }
 
-libm_alias_double (__lround, lround)
+libm_alias_float (__lround, lround)
